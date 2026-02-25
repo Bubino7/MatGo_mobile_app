@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "905494334430",
+    "project_id": "matgo-4c9f9",
+    "storage_bucket": "matgo-4c9f9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905494334430:android:17f9c70b65cb1585b36b4f",
+        "android_client_info": {
+          "package_name": "com.matgo_app.matgo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHtJZBP2dNTzj44l8-X_Q3oPQ4wMUegR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

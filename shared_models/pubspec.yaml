@@ -1,0 +1,7 @@
+name: shared_models
+description: Spoločné modely a utility pre MatGo aplikácie (shops, users, products, categories).
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ^3.0.0

@@ -68,3 +68,9 @@ ios/Podfile.lock
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
+
+# Deploy output (buildy pre web hosting)
+/deploy/client_app/
+/deploy/shop_app/
+/deploy/driver_app/
+/deploy/admin/

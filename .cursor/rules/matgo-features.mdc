@@ -1,0 +1,46 @@
+---
+description: Pravidlá pri implementácii nových features v MatGo (Flutter, GetX, Firebase)
+alwaysApply: true
+---
+
+# MatGo – nové features a konvencie
+
+## Ktorú appku meniť
+
+- **client_app** – zákaznícka app (produkty, košík, platba, bottom nav).
+- **admin_shop_app** – admin (stavebniny, dashboard); deploy na `/admin`.
+- **shop_app** / **driver_app** – placeholder; pri zmene skontroluj README a build skripty.
+
+Pri novej feature vždy povedz, v ktorej appke sa to má objaviť.
+
+## Kde pridávať kód (GetX štruktúra)
+
+- **Stránky:** `lib/pages/<názov>_page.dart` (napr. `orders_page.dart`).
+- **Controllery:** `lib/controllers/`, registrácia v `main.dart` cez `Get.put(MyController())`. Držia stav a volajú **services**.
+- **Services:** `lib/services/` – API, Firebase (Auth, Firestore), externé volania. Controllery a stránky nevolajú Firebase/API priamo, ale cez service (napr. `Get.find<AuthService>().signIn(...)`). Platí v **client_app** aj **admin_shop_app**.
+- **Modely:** `lib/models/` (napr. `product.dart`, `cart_item.dart`).
+- **Navigácia:** GetX – `Get.to(Page())`, `Get.back()`; bottom nav cez `NavigationController` a `HomeScreen`.
+
+## Technológie
+
+- Flutter (Material 3), GetX (state, navigácia), Firebase Auth + Firestore.
+- Téma: `ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber))`.
+- Logo/ikony: `assets/MatGo_icon_logo.png`; web ikony generovať cez `./scripts/generate_web_icons.sh`.
+
+## Konvencie
+
+- Súbory: `snake_case.dart`. Triedy: `PascalCase`. UI texty v slovenčine.
+- Novú stránku zapoj do navigácie (napr. v `HomeScreen` alebo cez `Get.to()` z inej stránky).
+- Build webu z koreňa repo: `./scripts/build_web_client.sh` (výstup do `deploy/`); `deploy/` nemanuálne neupravovať.
+
+## Príklad – nová stránka „Objednávky“
+
+1. Vytvor `client_app/lib/pages/orders_page.dart`.
+2. Ak treba stav: `lib/controllers/orders_controller.dart` a v `main.dart` pridať `Get.put(OrdersController())`.
+3. Ak treba dáta z API/Firebase: `lib/services/orders_service.dart` (napr. `Get.find<OrdersService>().getOrders()`), registrovať v `main.dart` cez `Get.put(OrdersService())`.
+4. Odkaz na stránku: v `main_page.dart` alebo v `ProfilePage` tlačidlo s `Get.to(OrdersPage())`, prípadne nová položka v bottom nav cez `NavigationController`.
+
+## Príklad – service
+
+- Existujúci **AuthService** (`lib/services/auth_service.dart`): `Get.find<AuthService>().currentUser`, `.signInWithEmailAndPassword()`, `.signOut()`, `.authStateChanges`.
+- Nový service: trieda rozširuje `GetxService`, v `main.dart` `Get.put(MyService())`; volanie z controlleru/stránky `Get.find<MyService>().metoda()`.
